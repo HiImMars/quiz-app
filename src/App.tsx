@@ -1,35 +1,77 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect, useState } from "react";
+import QuizList from "./components/QuizList/QuizList";
+import QuizForm from "./components/QuizForm/QuizForm";
+import QuizRunner from "./components/QuizRunner/QuizRunner";
+import { fetchQuizzes, saveQuizzes } from "./utils/localStorage";
+import { Quiz } from "./types/types";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: React.FC = () => {
+  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+  const [currentQuizId, setCurrentQuizId] = useState<number | null>(null);
+  const [runningQuizId, setRunningQuizId] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetchQuizzes().then(setQuizzes);
+  }, []);
+
+  const handleSaveQuiz = async (quiz: Quiz) => {
+    const updatedQuizzes = quizzes.map((q) => (q.id === quiz.id ? quiz : q));
+    if (!updatedQuizzes.includes(quiz)) {
+      updatedQuizzes.push(quiz);
+    }
+    await saveQuizzes(updatedQuizzes);
+    setQuizzes(updatedQuizzes);
+    setCurrentQuizId(null);
+  };
+
+  const handleDeleteQuiz = async (id: number) => {
+    const updatedQuizzes = quizzes.filter((quiz) => quiz.id !== id);
+    await saveQuizzes(updatedQuizzes);
+    setQuizzes(updatedQuizzes);
+  };
+
+  const handleEditQuiz = (id: number) => {
+    setCurrentQuizId(id);
+  };
+
+  const handleRunQuiz = (id: number) => {
+    setRunningQuizId(id);
+  };
+
+  const handleFinishQuiz = (score: number) => {
+    alert(`You scored ${score} points!`);
+    setRunningQuizId(null);
+  };
+
+  const currentQuiz = quizzes.find((quiz) => quiz.id === currentQuizId);
+  const runningQuiz = quizzes.find((quiz) => quiz.id === runningQuizId);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="p-4">
+      {!currentQuizId && !runningQuizId && (
+        <div>
+          <button
+            onClick={() => setCurrentQuizId(0)}
+            className="mb-4 text-blue-500"
+          >
+            Add New Quiz
+          </button>
+          <QuizList
+            quizzes={quizzes}
+            onEdit={handleEditQuiz}
+            onDelete={handleDeleteQuiz}
+            onRun={handleRunQuiz}
+          />
+        </div>
+      )}
+      {currentQuizId !== null && (
+        <QuizForm quiz={currentQuiz || undefined} onSave={handleSaveQuiz} />
+      )}
+      {runningQuizId !== null && runningQuiz && (
+        <QuizRunner quiz={runningQuiz} onFinish={handleFinishQuiz} />
+      )}
+    </div>
+  );
+};
 
-export default App
+export default App;
