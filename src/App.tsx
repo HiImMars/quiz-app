@@ -6,6 +6,7 @@ import QuizSearch from "./components/QuizSearch/QuizSearch";
 import { defaultQuizzes } from "./components/DefaultQuizzes/DefaultQuizzes";
 import { fetchQuizzes, saveQuizzes } from "./utils/localStorage";
 import { Quiz } from "./types/types";
+import { Notify } from "notiflix/build/notiflix-notify-aio";
 
 const App: React.FC = () => {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
@@ -35,12 +36,14 @@ const App: React.FC = () => {
     await saveQuizzes(updatedQuizzes);
     setQuizzes(updatedQuizzes);
     setCurrentQuizId(null);
+    Notify.success("Quiz successfully created!");
   };
 
   const handleDeleteQuiz = async (id: number) => {
     const updatedQuizzes = quizzes.filter((quiz) => quiz.id !== id);
     await saveQuizzes(updatedQuizzes);
     setQuizzes(updatedQuizzes);
+    Notify.warning("Quiz was deleted");
   };
 
   const handleEditQuiz = (id: number) => {
