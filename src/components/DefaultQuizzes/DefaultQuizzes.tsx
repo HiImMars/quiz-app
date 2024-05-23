@@ -1,4 +1,3 @@
-// src/defaultQuizzes.ts
 import { Quiz } from "../../types/types";
 
 export const defaultQuizzes: Quiz[] = [

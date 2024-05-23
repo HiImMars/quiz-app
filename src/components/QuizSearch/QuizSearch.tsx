@@ -18,7 +18,7 @@ const QuizSearch: React.FC<QuizSearchProps> = ({ onSearch }) => {
       placeholder="Search quizzes"
       value={searchTerm}
       onChange={handleChange}
-      className="mb-4 p-2 border border-gray-300 rounded"
+      className="mb-4 p-2 border border-gray-300 shadow-md rounded"
     />
   );
 };
