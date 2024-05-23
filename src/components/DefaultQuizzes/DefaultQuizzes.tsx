@@ -73,7 +73,7 @@ export const defaultQuizzes: Quiz[] = [
   },
   {
     id: 4,
-    title: "JavaScript Basics",
+    title: "Science and Technology",
     questions: [
       {
         id: 1,
