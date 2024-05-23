@@ -47,6 +47,58 @@ const defaultQuizzes: Quiz[] = [
       },
     ],
   },
+  {
+    id: 3,
+    title: "General Knowledge",
+    questions: [
+      {
+        id: 1,
+        text: "What is the capital of France?",
+        options: ["Paris", "Berlin", "Rome", "Kyiv"],
+        correctAnswer: 0,
+      },
+      {
+        id: 2,
+        text: "Which planet is known as the Red Planet?",
+        options: ["Earth", "Mars", "Jupiter"],
+        correctAnswer: 1,
+      },
+      {
+        id: 3,
+        text: "What is the largest ocean on Earth?",
+        options: ["Atlantic", "Indian", "Pacific", "Arctic"],
+        correctAnswer: 2,
+      },
+    ],
+  },
+  {
+    id: 4,
+    title: "JavaScript Basics",
+    questions: [
+      {
+        id: 1,
+        text: "What is the chemical symbol for water?",
+        options: ["O2", "H2O", "CO2", "None of the above"],
+        correctAnswer: 1,
+      },
+      {
+        id: 2,
+        text: "Who is known as the father of modern physics?",
+        options: ["Albert Einstein", "Isaac Newton", "Nikola Tesla"],
+        correctAnswer: 0,
+      },
+      {
+        id: 3,
+        text: "What does HTML stand for?",
+        options: [
+          "Home Tool Markup Language",
+          "Hyper Trainer Marking Language",
+          "Hyper Text Markup Language",
+        ],
+        correctAnswer: 2,
+      },
+    ],
+  },
 ];
 
 export const fetchQuizzes = (): Promise<Quiz[]> => {
