@@ -6,3 +6,4 @@ Technologies used:
 - React
 - TypeScript
 - Tailwind CSS
+- Notiflix

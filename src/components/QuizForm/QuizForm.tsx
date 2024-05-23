@@ -67,6 +67,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ quiz, onSave }) => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           className="mt-1 px-3 py-2 block w-full md:max-w-xl border-gray-500 rounded-md shadow"
+          required
         />
       </div>
       {questions.map((question, index) => (
@@ -79,6 +80,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ quiz, onSave }) => {
               updateQuestion(index, { ...question, text: e.target.value })
             }
             className="mt-1 px-1 py-1 block w-full border-gray-300 rounded-md shadow"
+            required
           />
           <div className="my-8 flex flex-col gap-5">
             {question.options.map((option, optIndex) => (
@@ -97,6 +99,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ quiz, onSave }) => {
                     updateOption(index, optIndex, e.target.value)
                   }
                   className="border-gray-300 rounded-md shadow w-full max-w-3xl px-1 py-1"
+                  required
                 />
                 <div className="w-full flex justify-between items">
                   <div className="flex flex-col">
@@ -111,7 +114,6 @@ const QuizForm: React.FC<QuizFormProps> = ({ quiz, onSave }) => {
                           correctAnswer: optIndex,
                         })
                       }
-                      className=""
                     />
                   </div>
                   <button
